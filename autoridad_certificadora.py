@@ -20,6 +20,23 @@ from Crypto import Random
 import rsa.randnum
 
 
+def send_private_key(self):
+    host = self.txtDireccionIP.text()
+    port = 5000
+    try:
+        s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        s.bind((host, port))
+        s.listen(1)
+    except socket.error, e:
+        print "Unable to Setup Local Socket. Port in Use"
+        return
+
+    while 1:
+        conn, addr = s.accept()
+        if self.lblTipoSolicitud.text() == "PRIVATE":
+            conn.send(self.txtPlainLlave.toPlainText())
+        conn.close()
+    s.close()
 
 def server_socket(self):
     host = self.txtDireccionIP.text()
@@ -34,8 +51,14 @@ def server_socket(self):
 
     while 1:
         conn, addr = s.accept()
-        data = conn.recv(1024)
-        print data
+        self.label_4.setText("Conectado")
+        self.rbtnConectado.setChecked(True)
+        self.lblStatus.setText("client connected ip:<" + str(addr) + ">")
+        tipo_solicitud = conn.recv(1024)
+        self.lblTipoSolicitud.setText(tipo_solicitud)
+        conn.send("OK")
+        nombre_organizacion = conn.recv(1024)
+        self.lineEdit.setText(nombre_organizacion)
         conn.close()
     s.close()
 
@@ -138,7 +161,7 @@ class Ui_MainWindow(object):
 
         ################################################################
         # Executes when the EnviarLlave Button is clicked
-
+        self.btnEnviarLlave.clicked.connect(self.restart_server_to_send)
         ################################################################
 
         self.btnEncriptar = QtGui.QPushButton(self.frame_3)
@@ -187,7 +210,7 @@ class Ui_MainWindow(object):
         self.btnDesconectarse.setGeometry(QtCore.QRect(90, 400, 121, 41))
         self.btnDesconectarse.setObjectName(_fromUtf8("btnDesconectarse"))
         self.lblStatus = QtGui.QLabel(self.centralwidget)
-        self.lblStatus.setGeometry(QtCore.QRect(10, 550, 54, 15))
+        self.lblStatus.setGeometry(QtCore.QRect(10, 550, 551, 16))
         self.lblStatus.setObjectName(_fromUtf8("lblStatus"))
         MainWindow.setCentralWidget(self.centralwidget)
         self.menubar = QtGui.QMenuBar(MainWindow)
@@ -266,6 +289,12 @@ class Ui_MainWindow(object):
     def start_server(self):
         start_new_thread(server_socket, (self,))
         print  "Server Started Sicessfully"
+
+    def restart_server_to_send(self):
+        start_new_thread(send_private_key, (self,))
+        print  "Server Started Sicessfully to Send the Private Key"
+
+
 
 
 if __name__ == "__main__":
