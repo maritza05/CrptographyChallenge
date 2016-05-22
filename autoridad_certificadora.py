@@ -9,12 +9,35 @@
 
 from PyQt4 import QtCore, QtGui
 
+import socket
+import threading
+import os
+from thread import *
+
 import rsa
 from Crypto.Cipher import AES
 from Crypto import Random
 import rsa.randnum
 
 
+
+def server_socket(self):
+    host = self.txtDireccionIP.text()
+    port = int(self.txtPuerto.text())
+    try:
+        s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        s.bind((host, port))
+        s.listen(1)
+    except socket.error, e:
+        print "Unable to Setup Local Socket. Port in Use"
+        return
+
+    while 1:
+        conn, addr = s.accept()
+        data = conn.recv(1024)
+        print data
+        conn.close()
+    s.close()
 
 
 try:
@@ -35,6 +58,9 @@ class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         # Generamos nuestras claves publicas y privadas
         self.my_private_key, self.my_public_key = rsa.newkeys(512)
+
+        # Create our dictionary of public keys
+        self.public_keys = {}
 
 
         MainWindow.setObjectName(_fromUtf8("MainWindow"))
@@ -61,6 +87,13 @@ class Ui_MainWindow(object):
         self.btnConectarse = QtGui.QPushButton(self.frame)
         self.btnConectarse.setGeometry(QtCore.QRect(440, 20, 91, 24))
         self.btnConectarse.setObjectName(_fromUtf8("btnConectarse"))
+
+        ################################################################
+        # Executes when the GenerarLlaves Button is clicked
+        self.btnConectarse.clicked.connect(self.start_server)
+        ################################################################
+
+
         self.rbtnConectado = QtGui.QRadioButton(self.frame)
         self.rbtnConectado.setGeometry(QtCore.QRect(550, 20, 95, 21))
         self.rbtnConectado.setText(_fromUtf8(""))
@@ -102,6 +135,12 @@ class Ui_MainWindow(object):
         self.btnEnviarLlave = QtGui.QPushButton(self.frame_3)
         self.btnEnviarLlave.setGeometry(QtCore.QRect(70, 320, 141, 24))
         self.btnEnviarLlave.setObjectName(_fromUtf8("btnEnviarLlave"))
+
+        ################################################################
+        # Executes when the EnviarLlave Button is clicked
+
+        ################################################################
+
         self.btnEncriptar = QtGui.QPushButton(self.frame_3)
         self.btnEncriptar.setGeometry(QtCore.QRect(90, 143, 91, 31))
         self.btnEncriptar.setObjectName(_fromUtf8("btnEncriptar"))
@@ -128,6 +167,12 @@ class Ui_MainWindow(object):
         self.listLlavesPublicas = QtGui.QListWidget(self.frame_4)
         self.listLlavesPublicas.setGeometry(QtCore.QRect(10, 120, 281, 261))
         self.listLlavesPublicas.setObjectName(_fromUtf8("listLlavesPublicas"))
+
+        ################################################################
+        # Executes when the item in listLlavesPublicas is clicked
+        self.listLlavesPublicas.itemClicked.connect(self.show_public_key)
+        ################################################################
+
         self.label_5 = QtGui.QLabel(self.frame_4)
         self.label_5.setGeometry(QtCore.QRect(20, 100, 111, 16))
         self.label_5.setObjectName(_fromUtf8("label_5"))
@@ -196,6 +241,8 @@ class Ui_MainWindow(object):
 
 
     def encrypt_private_key(self):
+        organizacion = self.lineEdit.text()
+
         # Creamos nuestra llave para AES
         aes_key = rsa.randnum.read_random_bits(128)
         iv = Random.new().read(AES.block_size)
@@ -206,12 +253,19 @@ class Ui_MainWindow(object):
         encripted_file = cipher.encrypt(text_empresa_private_key)
 
         # Encriptamos la llave del algoritmo AES con nuestra llave privada
-        encrypted_aes_key = rsa.encrypt(aes_key, self.my_private_key)
-        self.txtEncryptedLlave.setText(encrypted_aes_key)
+        self.encrypted_aes_key = rsa.encrypt(aes_key, self.my_private_key)
 
-    
+        # Actualizamos la lista con las claves publicas
+        self.public_keys[organizacion] = self.empresa_public_key.save_pkcs1()
+        self.listLlavesPublicas.addItem(organizacion)
 
+    def show_public_key(self, item):
+        item_public_key = self.public_keys[item.text()]
+        self.txtEncryptedLlave.setText(item_public_key)
 
+    def start_server(self):
+        start_new_thread(server_socket, (self,))
+        print  "Server Started Sicessfully"
 
 
 if __name__ == "__main__":
