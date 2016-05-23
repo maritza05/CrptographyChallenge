@@ -34,7 +34,24 @@ def send_private_key(self):
     while 1:
         conn, addr = s.accept()
         if self.lblTipoSolicitud.text() == "PRIVATE":
-            conn.send(self.txtPlainLlave.toPlainText())
+            conn.send(self.encripted_file)
+            recibido = conn.recv(1024)
+            if recibido == "OK":
+                conn.send(self.encrypted_aes_key)
+                recibido = conn.recv(1024)
+                if recibido == "OK":
+                    conn.send(self.my_public_key.save_pkcs1())
+
+        elif self.lblTipoSolicitud.text() == "PUBLIC":
+            to_send_public_key, to_send_aes_key = encrypt_public_key(self)
+            conn.send(to_send_public_key)
+            recibido = conn.recv(1024)
+            if recibido == "OK":
+                conn.send(to_send_aes_key)
+                recibido = conn.recv(1024)
+                if recibido == "OK":
+                    conn.send(self.my_public_key.save_pkcs1())
+
         conn.close()
     s.close()
 
@@ -62,8 +79,28 @@ def server_socket(self):
         self.lineEdit.setText(nombre_organizacion)
         #conn.send("Gracias")
         #print "Listo!"
-        conn.close()
+    conn.close()
     s.close()
+
+
+
+def encrypt_public_key(self):
+    organizacion = self.lineEdit.text()
+
+    # Creamos nuestra llave para AES
+    aes_key = rsa.randnum.read_random_bits(128)
+    iv = Random.new().read(AES.block_size)
+    cipher = AES.new(aes_key, AES.MODE_CFB, iv)
+
+    # Encriptamos con AES la llave publica de la empresa
+    text_empresa_public_key = self.public_keys[self.lineEdit.text()]
+    self.encripted_public_file = cipher.encrypt(text_empresa_public_key)
+
+    # Encriptamos la llave del algoritmo AES con nuestra llave privada
+    self.encrypted_public_aes_key = rsa.encrypt(aes_key, self.my_private_key)
+    return self.encripted_public_file, self.encrypted_public_aes_key
+
+
 
 
 try:
@@ -276,7 +313,7 @@ class Ui_MainWindow(object):
 
         # Encriptamos con AES la llave privada de la empresa
         text_empresa_private_key = self.empresa_private_key.save_pkcs1()
-        encripted_file = cipher.encrypt(text_empresa_private_key)
+        self.encripted_file = cipher.encrypt(text_empresa_private_key)
 
         # Encriptamos la llave del algoritmo AES con nuestra llave privada
         self.encrypted_aes_key = rsa.encrypt(aes_key, self.my_private_key)

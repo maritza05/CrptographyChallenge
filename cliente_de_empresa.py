@@ -11,10 +11,10 @@ def get_keys(public_key, encripted_aes_key, private_key):
     iv = Random.new().read(AES.block_size)
     cipher = AES.new(decrypted_aes_key, AES.MODE_CFB, iv)
     my_private_key = cipher.decrypt(private_key)
-    print "===================== LA LLAVE PRIVADA ================================="
-    my_private_key = "-----BEGIN RSA PRIVATE KEY-----\n"+my_private_key[my_private_key.find('\n')+1:]
+    print "===================== LA LLAVE PUBLICA ================================="
+    my_private_key = "-----BEGIN RSA PUBLIC KEY-----\n"+my_private_key[my_private_key.find('\n')+1:]
     print my_private_key
-    my_private_key = rsa.PrivateKey.load_pkcs1(my_private_key)
+    my_private_key = rsa.PublicKey.load_pkcs1(my_private_key)
     print my_private_key
     return my_private_key
 
@@ -26,7 +26,6 @@ def send_org_name():
     port = int(raw_input("Puerto de la autoridad certificadora? > "))
 
     s = socket.socket()
-    
     s.connect((host, port))
 
     print "Desea solicitar una llave privada o publica ? >"
@@ -57,33 +56,20 @@ def send_org_name():
         public_key_autoridad = s.recv(1024)
         print public_key_autoridad
         print "==============================="
-        my_private_key = get_keys(public_key_autoridad, encripted_aes_key, encripted_private_key)
-        s.close()
+        public_key_organizacion = get_keys(public_key_autoridad, encripted_aes_key, encripted_private_key)
+        #s.close()
 
-        esperar_mensaje = raw_input("Desea esperar un mensaje? > ")
-        if esperar_mensaje == "OK":
-            host = "127.0.0.1"
-            port = int(raw_input("En que puerto desea esperar ? > "))
-            try:
-                s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-                s.bind((host, port))
-                s.listen(1)
-            except socket.error, e:
-                print "Unable to Setup Local Socket. Port in Use"
-                return
+        host = raw_input("El host del cliente? > ")
+        port = int(raw_input("Puerto del cliente? > "))
 
-            while 1:
-                conn, addr = s.accept()
-                mensaje = conn.recv(4096)
-                mensaje_desencriptado = rsa.decrypt(mensaje, my_private_key)
-                print "============== MENSAJE ENCRIPTADO ===================="
-                print mensaje
-                print "============== MENSAJE DESENCRIPTADO ================="
-                print mensaje_desencriptado
-            s.close()
+        s2 = socket.socket()
+        s2.connect((host, port))
+        mensaje = raw_input("Que mensaje desea enviar? > ")
+        encrypted_mensaje = rsa.encrypt(mensaje, public_key_organizacion)
+        s2.send(encrypted_mensaje)
+        s2.close()
 
-    else:
-        s.close()
+    s.close()
 
 
 
