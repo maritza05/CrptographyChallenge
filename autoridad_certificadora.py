@@ -241,7 +241,7 @@ class Ui_MainWindow(object):
         self.label_5.setObjectName(_fromUtf8("label_5"))
         self.progressBar = QtGui.QProgressBar(self.frame_4)
         self.progressBar.setGeometry(QtCore.QRect(20, 50, 251, 23))
-        self.progressBar.setProperty("value", 24)
+        self.progressBar.setProperty("value", 0)
         self.progressBar.setObjectName(_fromUtf8("progressBar"))
         self.label_6 = QtGui.QLabel(self.frame_4)
         self.label_6.setGeometry(QtCore.QRect(20, 20, 121, 16))
@@ -288,7 +288,7 @@ class Ui_MainWindow(object):
         self.btnEncriptar.setText(_translate("MainWindow", ">>", None))
         self.label_7.setText(_translate("MainWindow", "Llave:", None))
         self.label_5.setText(_translate("MainWindow", "Llaves Públicas:", None))
-        self.label_6.setText(_translate("MainWindow", "Progreso del envio:", None))
+        self.label_6.setText(_translate("MainWindow", "Progreso del encriptado:", None))
         self.btnDesconectarse.setText(_translate("MainWindow", "Desconectarse", None))
         self.lblStatus.setText(_translate("MainWindow", "status:", None))
         self.menuAcerca.setTitle(_translate("MainWindow", "Acerca..", None))
@@ -305,6 +305,10 @@ class Ui_MainWindow(object):
 
     def encrypt_private_key(self):
         organizacion = self.lineEdit.text()
+        completed = 0
+        while completed < 100:
+            completed += 0.0001
+            self.progressBar.setValue(completed)
 
         # Creamos nuestra llave para AES
         aes_key = rsa.randnum.read_random_bits(128)
