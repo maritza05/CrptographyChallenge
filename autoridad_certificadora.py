@@ -57,8 +57,11 @@ def server_socket(self):
         tipo_solicitud = conn.recv(1024)
         self.lblTipoSolicitud.setText(tipo_solicitud)
         conn.send("OK")
-        nombre_organizacion = conn.recv(1024)
+        nombre_organizacion = ""
+        nombre_organizacion += conn.recv(1024)
         self.lineEdit.setText(nombre_organizacion)
+        #conn.send("Gracias")
+        #print "Listo!"
         conn.close()
     s.close()
 

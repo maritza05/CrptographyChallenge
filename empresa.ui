@@ -1,0 +1,449 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>MainWindow</class>
+ <widget class="QMainWindow" name="MainWindow">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>690</width>
+    <height>619</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Empresa</string>
+  </property>
+  <widget class="QWidget" name="centralwidget">
+   <widget class="QFrame" name="frame">
+    <property name="geometry">
+     <rect>
+      <x>50</x>
+      <y>10</y>
+      <width>611</width>
+      <height>61</height>
+     </rect>
+    </property>
+    <property name="frameShape">
+     <enum>QFrame::StyledPanel</enum>
+    </property>
+    <property name="frameShadow">
+     <enum>QFrame::Raised</enum>
+    </property>
+    <widget class="QLabel" name="label">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>20</y>
+       <width>81</width>
+       <height>16</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Dirección IP</string>
+     </property>
+    </widget>
+    <widget class="QLineEdit" name="txtDireccionIP">
+     <property name="geometry">
+      <rect>
+       <x>80</x>
+       <y>20</y>
+       <width>221</width>
+       <height>23</height>
+      </rect>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label_2">
+     <property name="geometry">
+      <rect>
+       <x>340</x>
+       <y>20</y>
+       <width>54</width>
+       <height>15</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Puerto:</string>
+     </property>
+    </widget>
+    <widget class="QLineEdit" name="txtPuerto">
+     <property name="geometry">
+      <rect>
+       <x>410</x>
+       <y>20</y>
+       <width>113</width>
+       <height>23</height>
+      </rect>
+     </property>
+    </widget>
+   </widget>
+   <widget class="QFrame" name="frame_2">
+    <property name="geometry">
+     <rect>
+      <x>50</x>
+      <y>80</y>
+      <width>311</width>
+      <height>151</height>
+     </rect>
+    </property>
+    <property name="frameShape">
+     <enum>QFrame::StyledPanel</enum>
+    </property>
+    <property name="frameShadow">
+     <enum>QFrame::Raised</enum>
+    </property>
+    <widget class="QLineEdit" name="txtNombreOrganizacion">
+     <property name="geometry">
+      <rect>
+       <x>120</x>
+       <y>20</y>
+       <width>171</width>
+       <height>23</height>
+      </rect>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label_3">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>20</y>
+       <width>111</width>
+       <height>16</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Nombre de org. :</string>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="btnEnviarDatosOrganizacion">
+     <property name="geometry">
+      <rect>
+       <x>100</x>
+       <y>110</y>
+       <width>91</width>
+       <height>24</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Enviar</string>
+     </property>
+    </widget>
+    <widget class="QRadioButton" name="rbtnLlavePrivada">
+     <property name="geometry">
+      <rect>
+       <x>40</x>
+       <y>70</y>
+       <width>101</width>
+       <height>21</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Llave Privada</string>
+     </property>
+    </widget>
+    <widget class="QRadioButton" name="rbtnLlavePublica">
+     <property name="geometry">
+      <rect>
+       <x>160</x>
+       <y>70</y>
+       <width>95</width>
+       <height>21</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Llave Publica</string>
+     </property>
+    </widget>
+   </widget>
+   <widget class="QFrame" name="frame_3">
+    <property name="geometry">
+     <rect>
+      <x>50</x>
+      <y>240</y>
+      <width>311</width>
+      <height>311</height>
+     </rect>
+    </property>
+    <property name="frameShape">
+     <enum>QFrame::StyledPanel</enum>
+    </property>
+    <property name="frameShadow">
+     <enum>QFrame::Raised</enum>
+    </property>
+    <widget class="QPushButton" name="btnSolicitarLlave">
+     <property name="geometry">
+      <rect>
+       <x>100</x>
+       <y>10</y>
+       <width>91</width>
+       <height>24</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Solicitar Llave</string>
+     </property>
+    </widget>
+    <widget class="QTextEdit" name="txtLlaveEncriptada">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>60</y>
+       <width>281</width>
+       <height>61</height>
+      </rect>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label_4">
+     <property name="geometry">
+      <rect>
+       <x>20</x>
+       <y>40</y>
+       <width>111</width>
+       <height>16</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Llave encriptada</string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label_5">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>130</y>
+       <width>54</width>
+       <height>15</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Clave:</string>
+     </property>
+    </widget>
+    <widget class="QTextEdit" name="txtLlaveAES">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>150</y>
+       <width>281</width>
+       <height>51</height>
+      </rect>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="btnDesencriptarLlave">
+     <property name="geometry">
+      <rect>
+       <x>90</x>
+       <y>210</y>
+       <width>111</width>
+       <height>24</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Desencriptar</string>
+     </property>
+    </widget>
+    <widget class="QProgressBar" name="progressBar">
+     <property name="geometry">
+      <rect>
+       <x>20</x>
+       <y>260</y>
+       <width>271</width>
+       <height>23</height>
+      </rect>
+     </property>
+     <property name="value">
+      <number>24</number>
+     </property>
+    </widget>
+   </widget>
+   <widget class="QFrame" name="frame_4">
+    <property name="geometry">
+     <rect>
+      <x>380</x>
+      <y>80</y>
+      <width>281</width>
+      <height>151</height>
+     </rect>
+    </property>
+    <property name="frameShape">
+     <enum>QFrame::StyledPanel</enum>
+    </property>
+    <property name="frameShadow">
+     <enum>QFrame::Raised</enum>
+    </property>
+    <widget class="QLabel" name="label_6">
+     <property name="geometry">
+      <rect>
+       <x>20</x>
+       <y>20</y>
+       <width>54</width>
+       <height>15</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Llave:</string>
+     </property>
+    </widget>
+    <widget class="QTextEdit" name="txtPlainLlave">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>50</y>
+       <width>261</width>
+       <height>91</height>
+      </rect>
+     </property>
+    </widget>
+   </widget>
+   <widget class="QFrame" name="frame_5">
+    <property name="geometry">
+     <rect>
+      <x>380</x>
+      <y>240</y>
+      <width>281</width>
+      <height>311</height>
+     </rect>
+    </property>
+    <property name="frameShape">
+     <enum>QFrame::StyledPanel</enum>
+    </property>
+    <property name="frameShadow">
+     <enum>QFrame::Raised</enum>
+    </property>
+    <widget class="QLabel" name="label_7">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>10</y>
+       <width>121</width>
+       <height>16</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Esperar mensaje:</string>
+     </property>
+    </widget>
+    <widget class="QLineEdit" name="txtDireccionIPEsperaMensaje">
+     <property name="geometry">
+      <rect>
+       <x>80</x>
+       <y>30</y>
+       <width>171</width>
+       <height>23</height>
+      </rect>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label_8">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>30</y>
+       <width>81</width>
+       <height>16</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Dirección IP</string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label_9">
+     <property name="geometry">
+      <rect>
+       <x>30</x>
+       <y>60</y>
+       <width>54</width>
+       <height>15</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Puerto:</string>
+     </property>
+    </widget>
+    <widget class="QLineEdit" name="txtPuertoEsperaMensaje">
+     <property name="geometry">
+      <rect>
+       <x>80</x>
+       <y>60</y>
+       <width>171</width>
+       <height>23</height>
+      </rect>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="btnConectarseEsperaMensaje">
+     <property name="geometry">
+      <rect>
+       <x>60</x>
+       <y>90</y>
+       <width>91</width>
+       <height>24</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Conectarse</string>
+     </property>
+    </widget>
+    <widget class="QRadioButton" name="rbtnConectadoParaMensaje">
+     <property name="geometry">
+      <rect>
+       <x>170</x>
+       <y>90</y>
+       <width>95</width>
+       <height>21</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+    </widget>
+    <widget class="QTextEdit" name="txtMensajeDesencriptado">
+     <property name="geometry">
+      <rect>
+       <x>20</x>
+       <y>160</y>
+       <width>241</width>
+       <height>131</height>
+      </rect>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label_10">
+     <property name="geometry">
+      <rect>
+       <x>20</x>
+       <y>140</y>
+       <width>171</width>
+       <height>16</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Mensaje desencriptado:</string>
+     </property>
+    </widget>
+   </widget>
+   <widget class="QLabel" name="lblStatus">
+    <property name="geometry">
+     <rect>
+      <x>50</x>
+      <y>560</y>
+      <width>601</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>TextLabel</string>
+    </property>
+   </widget>
+  </widget>
+  <widget class="QMenuBar" name="menubar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>690</width>
+     <height>21</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QStatusBar" name="statusbar"/>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>
